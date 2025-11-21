@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: eshop_api
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_eshop?createDatabaseIfNotExist=true
+    username: sara
+    password: Name123*
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
