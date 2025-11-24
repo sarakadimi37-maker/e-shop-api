@@ -1,3 +1,7 @@
+server:
+  servlet:
+    context-path: /e-shop
+
 spring:
   application:
     name: eshop_api
@@ -6,7 +10,14 @@ spring:
     username: sara
     password: Name123*
 
+
+
+  sql:
+    init:
+      mode: always
+
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.MySQL8Dialect

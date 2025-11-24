@@ -1,4 +1,4 @@
-package fr.utilix.eshop_api.entity;
+package fr.utilix.eshop_api.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderItem extends BaseEntity {
+public class OrderItemEntity extends BaseEntity {
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
@@ -22,8 +22,8 @@ public class OrderItem extends BaseEntity {
     private Double uintPrice;
 
    @ManyToOne
-    private Orders orders;
+    private OrderEntity order;
 
     @ManyToOne
-    private Product product;
+    private ProductEntity product;
 }

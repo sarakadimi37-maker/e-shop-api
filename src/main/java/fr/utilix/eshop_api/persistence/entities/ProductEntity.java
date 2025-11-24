@@ -1,4 +1,4 @@
-package fr.utilix.eshop_api.entity;
+package fr.utilix.eshop_api.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Product extends BaseEntity{
+public class ProductEntity extends BaseEntity{
 
     @Column(name = "name", nullable = false, length = 80)
     private String name;
@@ -44,5 +45,7 @@ public class Product extends BaseEntity{
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private List<Category> categories;
+    private List<CategoryEntity> categories = new ArrayList<>();
+
+
 }

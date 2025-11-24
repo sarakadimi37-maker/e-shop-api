@@ -1,4 +1,4 @@
-package fr.utilix.eshop_api.entity.enumeration;
+package fr.utilix.eshop_api.persistence.entities.enumeration;
 
 public enum OrderStatus {
     PENDING,          // Commande créée mais pas encore validée

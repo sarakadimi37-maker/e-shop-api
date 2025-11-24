@@ -1,4 +1,4 @@
-package fr.utilix.eshop_api.entity;
+package fr.utilix.eshop_api.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Address extends BaseEntity{
+public class AddressEntity extends BaseEntity{
 
     @Column(name = "street", nullable = false, length = 120)
     private String street;
@@ -26,6 +26,6 @@ public class Address extends BaseEntity{
     @Column(name = "country", nullable = false, length = 80)
     private String country;
 
-    @ManyToOne
-    private Customer customer;
+    @OneToOne(mappedBy = "address")
+    private CustomerEntity customer;
 }

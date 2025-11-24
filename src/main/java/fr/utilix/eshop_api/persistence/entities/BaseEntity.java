@@ -1,4 +1,4 @@
-package fr.utilix.eshop_api.entity;
+package fr.utilix.eshop_api.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
