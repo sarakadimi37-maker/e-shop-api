@@ -2,6 +2,15 @@ server:
   servlet:
     context-path: /e-shop
 
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: /swagger
+    operationsSorter: method
+    displayRequestDuration: true
+
 spring:
   application:
     name: eshop_api
@@ -10,7 +19,9 @@ spring:
     username: sara
     password: Name123*
 
-
+logging:
+  level:
+    org.springframework.web: "debug"
 
   sql:
     init:

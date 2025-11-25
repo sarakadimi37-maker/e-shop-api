@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>21</java.version>
         <lombok.version>1.18.42</lombok.version>
+        <openapi.version>3.0.0</openapi.version>
     </properties>
 	<dependencies>
 		<dependency>
@@ -63,6 +64,13 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${openapi.version}</version>
+        </dependency>
+
 	</dependencies>
 
 	<build>
