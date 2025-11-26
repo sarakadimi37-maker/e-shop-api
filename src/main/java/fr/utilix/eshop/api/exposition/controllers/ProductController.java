@@ -1,5 +1,6 @@
 package fr.utilix.eshop.api.exposition.controllers;
 
+import fr.utilix.eshop.api.exception.ResourceNotFoundException;
 import fr.utilix.eshop.api.exposition.dtos.ProductRequestDTO;
 import fr.utilix.eshop.api.exposition.dtos.ProductResponseDTO;
 import fr.utilix.eshop.api.mappers.ProductMapper;
@@ -50,14 +51,13 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
-        Optional<ProductEntity> optProduct = productRepository.findById(id);
-        if (optProduct.isPresent()){
-            ProductEntity product =optProduct.get();
+        ProductEntity product = productRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException(
+                        "Produit avec l'ID : " + id + " n'existe pas."
+                ));
             ProductResponseDTO dto = productMapper.toDto(product);
             return ResponseEntity.ok(dto);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+
     }
 
     /**
