@@ -1,7 +1,6 @@
-package fr.utilix.eshop_api.dto;
+package fr.utilix.eshop.api.exposition.dtos;
 
 public record CategoryDto(
         Long id,
         String label
-) {
-}
+) {}

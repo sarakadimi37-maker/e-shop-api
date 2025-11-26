@@ -1,4 +1,4 @@
-package fr.utilix.eshop_api;
+package fr.utilix.eshop.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

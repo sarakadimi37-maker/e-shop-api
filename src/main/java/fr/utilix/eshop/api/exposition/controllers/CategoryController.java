@@ -1,7 +1,7 @@
-package fr.utilix.eshop_api.exposition.controllers;
+package fr.utilix.eshop.api.exposition.controllers;
 
-import fr.utilix.eshop_api.persistence.entities.CategoryEntity;
-import fr.utilix.eshop_api.persistence.repositories.CategoryRepository;
+import fr.utilix.eshop.api.persistence.entities.CategoryEntity;
+import fr.utilix.eshop.api.persistence.repositories.CategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

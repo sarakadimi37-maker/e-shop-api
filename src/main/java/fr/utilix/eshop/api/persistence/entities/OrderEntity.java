@@ -1,6 +1,6 @@
-package fr.utilix.eshop_api.persistence.entities;
+package fr.utilix.eshop.api.persistence.entities;
 
-import fr.utilix.eshop_api.persistence.entities.enumeration.OrderStatus;
+import fr.utilix.eshop.api.persistence.entities.enumeration.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package fr.utilix.eshop_api.config;
+package fr.utilix.eshop.api.config;
 
-import fr.utilix.eshop_api.persistence.repositories.ProductRepository;
+import fr.utilix.eshop.api.persistence.repositories.ProductRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
