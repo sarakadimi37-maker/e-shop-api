@@ -6,6 +6,7 @@ import fr.utilix.eshop.api.mappers.ProductMapper;
 import fr.utilix.eshop.api.persistence.entities.CategoryEntity;
 import fr.utilix.eshop.api.persistence.entities.ProductEntity;
 import fr.utilix.eshop.api.persistence.repositories.ProductRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,7 +77,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> createProduct(
-            @RequestBody ProductRequestDTO request
+            @Valid @RequestBody ProductRequestDTO request
     ) {
         ProductEntity entity = productMapper.toEntity(request);
         ProductEntity saved = productRepository.save(entity);
