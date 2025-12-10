@@ -1,0 +1,32 @@
+@startuml
+
+start
+:vérifier si une command en cours (PENDING) exist pour custumer(id);
+if(command exist?) then (oui)
+    : Récupèrer le command en cours;
+    if(produit exist en panier?) then (oui)
+        :incrementer la quantité;
+        :mettre à jour la command;
+    else (non)
+        :Crer un nouveau orderItem;
+        :Attacher le produit à la commande en cours;
+        :persister en bdd;
+    endif
+else (non)
+    :Créer une nouvelle commande;
+    :Enregistrer dans la table order;
+    :recupèrer le produit par id;
+    :Créer une ligne de command(orderItem);
+    :Attacher le produit à la nouvelle commande;
+    :Enregistrer le (orderItem);
+    endif
+stop
+@enduml
+
+@startuml
+start
+: Initialiser une nouvelle commande;
+: Assigner l'utilisateur à la commande;
+: définir le status = "en cours";
+stop
+@enduml
