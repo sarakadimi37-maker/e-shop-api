@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -45,6 +47,10 @@ public class CustomerEntity extends BaseEntity{
             orphanRemoval = true
     )
     private List<FavoriteEntity> favorites;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
 
     public void updateForm(CustomerRequestDTO dto) {

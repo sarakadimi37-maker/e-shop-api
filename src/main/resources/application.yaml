@@ -1,3 +1,8 @@
+eshop:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: ${JWT_EXPIRATION_MS}
+
 server:
   servlet:
     context-path: /e-shop
@@ -11,30 +16,28 @@ springdoc:
     operationsSorter: method
     displayRequestDuration: true
 
+
+
 spring:
   application:
     name: eshop_api
-  datasource:
-    url: jdbc:mysql://${DB_HOST_DEV}:${DB_PORT_DEV}/${DB_NAME_DEV}?createDatabaseIfNotExist=true
-    username: ${DB_USER_DEV}
-    password: ${DB_PASSWORD_DEV}
   mvc:
     throw-exception-if-no-handler-found: true
   web:
     resources:
       add-mappings: false
-
-cors:
-  allowed-origins: ${CLIENT_URL_DEV}
-
-logging:
-  level:
-    org.springframework.web: "debug"
-
+  cors:
+    allowed-origins: ${CLIENT_URL_DEV}
+  logging:
+    level:
+      org.springframework.web: "debug"
+  datasource:
+    url: jdbc:mysql://${DB_HOST_DEV}:${DB_PORT_DEV}/${DB_NAME_DEV}?createDatabaseIfNotExist=true
+    username: ${DB_USER_DEV}
+    password: ${DB_PASSWORD_DEV}
   sql:
     init:
       mode: always
-
   jpa:
     defer-datasource-initialization: true
     hibernate:
