@@ -1,14 +1,13 @@
 package fr.utilix.eshop.api.persistence.entities;
 
+import fr.utilix.eshop.api.exposition.dtos.request.CustomerRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -24,17 +23,13 @@ public class CustomerEntity extends BaseEntity{
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
-  /* ak
-    @OneToMany(mappedBy = "customer")
-    private Set<Address> address;
-*/
 
     // Métier : le Customer est parent de Order (il possède plusieurs commandes). => list
     @OneToMany(mappedBy = "customer",
     cascade = CascadeType.ALL,
     orphanRemoval = true
     )
-    private List<OrderEntity> orders = new ArrayList<>();
+    private List<OrderEntity> orders;
 
 
     @OneToOne(
@@ -49,9 +44,11 @@ public class CustomerEntity extends BaseEntity{
     cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true
     )
-    private Set<FavoriteEntity> favorites;
+    private List<FavoriteEntity> favorites;
 
 
-
+    public void updateForm(CustomerRequestDTO dto) {
+        // à completer
+    }
 }
 

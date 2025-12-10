@@ -1,5 +1,6 @@
 package fr.utilix.eshop.api.persistence.entities;
 
+import fr.utilix.eshop.api.exposition.dtos.request.ProductRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,14 +18,23 @@ import java.util.List;
 @Setter
 public class ProductEntity extends BaseEntity{
 
+    public void updateFrom(ProductRequestDTO dto){
+        this.name = dto.name();
+        this.description = dto.description();
+        this.price = dto.price();
+        this.stock = dto.stock();
+        this.discount = dto.discount();
+        this.isActive = dto.isActive();
+    }
+
     @Column(name = "name", nullable = false, length = 80)
     private String name;
 
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "Image_url", nullable = false, length = 255)
-    private String ImageUrl;
+    @Column(name = "image_url", nullable = false, length = 255)
+    private String imageUrl;
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;

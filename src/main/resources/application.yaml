@@ -15,14 +15,17 @@ spring:
   application:
     name: eshop_api
   datasource:
-    url: jdbc:mysql://localhost:3306/db_eshop?createDatabaseIfNotExist=true
-    username: sara
-    password: Name123*
+    url: jdbc:mysql://${DB_HOST_DEV}:${DB_PORT_DEV}/${DB_NAME_DEV}?createDatabaseIfNotExist=true
+    username: ${DB_USER_DEV}
+    password: ${DB_PASSWORD_DEV}
   mvc:
     throw-exception-if-no-handler-found: true
   web:
     resources:
       add-mappings: false
+
+cors:
+  allowed-origins: ${CLIENT_URL_DEV}
 
 logging:
   level:

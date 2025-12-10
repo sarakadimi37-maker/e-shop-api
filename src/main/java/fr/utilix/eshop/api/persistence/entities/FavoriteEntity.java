@@ -1,9 +1,13 @@
 package fr.utilix.eshop.api.persistence.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "favorite")
+@Getter
+@Setter
 public class FavoriteEntity {
 
     @Id

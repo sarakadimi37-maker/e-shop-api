@@ -1,13 +1,13 @@
 package fr.utilix.eshop.api.persistence.entities;
 
-import fr.utilix.eshop.api.persistence.entities.enumeration.OrderStatus;
+import fr.utilix.eshop.api.enumeration.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 
 @Entity
@@ -28,5 +28,5 @@ public class OrderEntity extends BaseEntity{
     private CustomerEntity customer;
 
     @OneToMany(mappedBy = "order")
-    private Set<OrderItemEntity> orderItems;
+    private List<OrderItemEntity> orderItems;
 }

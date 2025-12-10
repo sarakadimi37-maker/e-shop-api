@@ -21,7 +21,7 @@ public class OrderItemEntity extends BaseEntity {
     @Column(name = "uint_price", nullable = false)
     private Double uintPrice;
 
-   @ManyToOne
+    @ManyToOne
     private OrderEntity order;
 
     @ManyToOne

@@ -1,8 +1,8 @@
 package fr.utilix.eshop.api.exposition.controllers;
 
-import fr.utilix.eshop.api.exception.ResourceNotFoundException;
-import fr.utilix.eshop.api.exposition.dtos.ProductRequestDTO;
-import fr.utilix.eshop.api.exposition.dtos.ProductResponseDTO;
+import fr.utilix.eshop.api.domain.services.ProductService;
+import fr.utilix.eshop.api.exposition.dtos.request.ProductRequestDTO;
+import fr.utilix.eshop.api.exposition.dtos.response.ProductResponseDTO;
 import fr.utilix.eshop.api.mappers.ProductMapper;
 import fr.utilix.eshop.api.persistence.entities.CategoryEntity;
 import fr.utilix.eshop.api.persistence.entities.ProductEntity;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -22,15 +21,12 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
+    private  final ProductService productService;
 
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
-        List<ProductResponseDTO> dtos = productRepository.findAll()
-                .stream()
-                .map(productMapper::toDto)
-                .toList();
-        return ResponseEntity.ok(dtos);
+        List<ProductResponseDTO> response  = productService.findAll();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
@@ -51,47 +47,25 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
-        ProductEntity product = productRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException(
-                        "Produit avec l'ID : " + id + " n'existe pas."
-                ));
-            ProductResponseDTO dto = productMapper.toDto(product);
-            return ResponseEntity.ok(dto);
-
+        ProductResponseDTO response = productService.findById(id);
+            return ResponseEntity.ok(response);
     }
-
-    /**
-     *  La version ameliorer syntaxiquement
-     * @param
-     * @return
-     */
-    /*
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> getwProductById(@PathVariable Long id){
-        return productRepository.findById(id)
-                .map(ProductMapper::toDto)
-                .map(ResponseEntity::ok)
-                .orElseGet(()-> ResponseEntity.notFound().build());
-    }
-   */
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> createProduct(
             @Valid @RequestBody ProductRequestDTO request
     ) {
-        ProductEntity entity = productMapper.toEntity(request);
-        ProductEntity saved = productRepository.save(entity);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(productMapper.toDto(saved));
+        ProductResponseDTO response = productService.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> updateProduct(
             @PathVariable Long id,
-            @RequestBody ProductRequestDTO request
+            @Valid @RequestBody ProductRequestDTO request
     ){
-       return doUpdateProduct(id, request);
+       ProductResponseDTO response = productService.update(id, request);
+       return ResponseEntity.ok(response);
     }
 
     /**
@@ -113,7 +87,7 @@ public class ProductController {
             existing.setDiscount(request.discount());
 
             ProductEntity updated = productRepository.save(existing);
-            return ResponseEntity.ok(productMapper.toDto(updated));
+            return ResponseEntity.ok(ProductMapper.toDto(updated));
         }else {
             return ResponseEntity.notFound().build();
         }
@@ -121,17 +95,13 @@ public class ProductController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-
-        if(productRepository.existsById(id)){
-            productRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
+        productService.delete(id);
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/all")
     public ResponseEntity<Void> deleteAllProducts(){
-        productRepository.deleteAll();
+        productService.deleteAll();
         return ResponseEntity.noContent().build();
     }
 
