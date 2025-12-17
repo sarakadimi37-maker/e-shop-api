@@ -3,7 +3,6 @@ package fr.utilix.eshop.api.domain.rules;
 import fr.utilix.eshop.api.enumeration.OrderStatus;
 import fr.utilix.eshop.api.exception.ValidationException;
 import fr.utilix.eshop.api.persistence.entities.CustomerEntity;
-import fr.utilix.eshop.api.persistence.entities.OrderEntity;
 import fr.utilix.eshop.api.persistence.entities.OrderItemEntity;
 import fr.utilix.eshop.api.persistence.entities.ProductEntity;
 

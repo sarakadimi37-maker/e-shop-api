@@ -7,13 +7,21 @@ import fr.utilix.eshop.api.mappers.ProductMapper;
 import fr.utilix.eshop.api.persistence.entities.CategoryEntity;
 import fr.utilix.eshop.api.persistence.entities.ProductEntity;
 import fr.utilix.eshop.api.persistence.repositories.ProductRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -23,9 +31,36 @@ public class ProductController {
     private final ProductRepository productRepository;
     private  final ProductService productService;
 
+
     @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
-        List<ProductResponseDTO> response  = productService.findAll();
+    public ResponseEntity<Map<String, Object>> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id,asc") String[] sort) {
+
+        String sortField = sort[0];
+        String sortDirection = sort.length > 1 ? sort[1] : "asc";
+
+        // 👇 On construit un objet "Pageable" avec les RequestParams
+        Sort sortDirction = sortDirection.equalsIgnoreCase("desc")
+                ? Sort.by(sortField).descending()
+                : Sort.by(sortField).ascending();
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                sortDirction
+        );
+
+        // 👇 On passe cet objet Pageable en argument de findAll
+        Page<ProductEntity> productPage = productRepository.findAll(pageable);
+
+        // 👇 On prépare et renvoie la réponse au client, en incluant les résultats (bien sûr), mais aussi "où en est le client dans sa recherche" : page actuelle, nombre d'élements par page, nombre de pages total.
+        Map<String, Object> response = new HashMap<>();
+        response.put("content", productPage.getContent());
+        response.put("currentPage", productPage.getNumber());
+        response.put("totalItems", productPage.getTotalElements());
+        response.put("totalPages", productPage.getTotalPages());
+
         return ResponseEntity.ok(response);
     }
 
@@ -45,6 +80,12 @@ public class ProductController {
         return products;
     }
 
+    @Operation(
+            summary = "Obtenir un produit par son ID",
+            description = "Retourne les informations détaillées d’un produit existant"
+    )
+    @ApiResponse(responseCode = "200", description = "Produit trouvé avec succès")
+    @ApiResponse(responseCode = "404", description = "Produit non trouvé")
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
         ProductResponseDTO response = productService.findById(id);

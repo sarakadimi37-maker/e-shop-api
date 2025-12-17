@@ -47,3 +47,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  cache:
+    type: simple

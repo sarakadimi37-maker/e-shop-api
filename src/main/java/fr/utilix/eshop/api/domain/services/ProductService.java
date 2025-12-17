@@ -9,6 +9,8 @@ import fr.utilix.eshop.api.mappers.ProductMapper;
 import fr.utilix.eshop.api.persistence.entities.ProductEntity;
 import fr.utilix.eshop.api.persistence.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,14 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    // Exemple : Invalide le cache quand on ajoute un produit
+    // Retire ce log une fois que tu as vérifié que ton cache fonctionne,
+    @CacheEvict(value = "products", allEntries = true)
+    public ProductEntity addProduct(ProductEntity product) {
+        return productRepository.save(product);
+    }
+
+    @Cacheable("Products")
     public List<ProductResponseDTO> findAll(){
         return productRepository.findAll()
                 .stream()
@@ -62,6 +72,7 @@ public class ProductService {
         return ProductMapper.toDto(saved);
     }
 
+    @CacheEvict(value = "products", allEntries = true)
     public void delete(Long id){
         if(!productRepository.existsById(id)){
             throw new ResourceNotFoundException("Impossible de supprimer : Produit " + id + " introuvable.");

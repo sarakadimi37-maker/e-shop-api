@@ -2,6 +2,7 @@ package fr.utilix.eshop.api.config;
 
 import fr.utilix.eshop.api.persistence.repositories.ProductRepository;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
@@ -11,6 +12,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 @Component
+@Slf4j
 public class DatabaseInitializer {
 
     @Autowired
@@ -26,7 +28,7 @@ public class DatabaseInitializer {
             ScriptUtils.executeSqlScript(conn, new ClassPathResource("data.sql"));
             System.out.println("🤭 Données initiales insérées avec succès !");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("pb initialisation", e);
         }
 
     }

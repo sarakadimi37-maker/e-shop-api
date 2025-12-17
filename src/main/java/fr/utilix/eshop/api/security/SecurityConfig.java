@@ -1,8 +1,6 @@
-package fr.utilix.eshop.api.config;
+package fr.utilix.eshop.api.security;
 
 import fr.utilix.eshop.api.domain.services.CustomUserDetailsService;
-import fr.utilix.eshop.api.security.JwtExceptionHandlerFilter;
-import fr.utilix.eshop.api.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

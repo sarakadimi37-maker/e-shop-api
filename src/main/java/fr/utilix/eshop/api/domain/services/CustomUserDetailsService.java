@@ -1,6 +1,5 @@
 package fr.utilix.eshop.api.domain.services;
 
-import fr.utilix.eshop.api.persistence.repositories.CustomerRepository;
 import fr.utilix.eshop.api.persistence.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
