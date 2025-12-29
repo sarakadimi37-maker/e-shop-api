@@ -32,28 +32,9 @@ public class OrderMapper {
 
         status = entity.getStatus();
 
-        orderItems = orderItemEntitySetToOrderItemResponseDTOList( entity.getOrderItems() );
-        OrderResponseDTO orderResponseDTO = new OrderResponseDTO( status, orderItems );
-        return orderResponseDTO;
+        return new OrderResponseDTO( status, orderItems );
     }
 
-
-    protected static List<OrderItemResponseDTO> orderItemEntitySetToOrderItemResponseDTOList(List<OrderItemEntity> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        List<OrderItemResponseDTO> list = new ArrayList<OrderItemResponseDTO>( set.size() );
-        for ( OrderItemEntity orderItemEntity : set ) {
-            list.add( toOrderItemDto( orderItemEntity ) );
-        }
-
-        return list;
-    }
-
-    private static OrderItemResponseDTO toOrderItemDto(OrderItemEntity orderItemEntity) {
-        return new OrderItemResponseDTO(1, 1d, null);
-    }
 
 
 }

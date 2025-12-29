@@ -7,5 +7,6 @@ public enum OrderStatus {
     SHIPPED,          // Expédiée
     DELIVERED,        // Livrée au client
     CANCELLED,        // Annulée par le client ou le vendeur
-    REFUNDED          // Remboursée
+    REFUNDED ,
+    ARCHIVED// Remboursée
 }

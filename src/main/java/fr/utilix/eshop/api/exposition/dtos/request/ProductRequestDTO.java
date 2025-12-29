@@ -1,7 +1,11 @@
 package fr.utilix.eshop.api.exposition.dtos.request;
 
+import jakarta.persistence.Column;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
+
+import java.time.LocalDate;
 
 /**
  * Ce DTO représente ce que le client envoie (lors d’un POST ou PUT).
@@ -13,6 +17,7 @@ import jakarta.validation.constraints.*;
  * @param stock
  * @param discount
  */
+@Builder(toBuilder = true)
 public record ProductRequestDTO(
         @Valid
         @NotBlank(message = "Le nom de produit ne peut pas être vide")
@@ -35,7 +40,7 @@ public record ProductRequestDTO(
 
         @Valid
         @NotNull(message = "Le statut d’activation ne peut pas être null")
-        Boolean isActive,
+        boolean isActive,
 
         @Valid
         @NotNull(message = "Le prix ne peut pas être null")
@@ -50,6 +55,12 @@ public record ProductRequestDTO(
 
         @PositiveOrZero(message = "La remise ne peut pas être négative")
         @Max(value = 90, message = "La remise ne peut pas dépasser 90%")
-        double discount
+        @Min(value = 0, message = "La remise ne peut pas être inférieur à 0%")
+        double discount,
+
+        @Valid
+        LocalDate promoStart,
+        @Valid
+        LocalDate promoEnd
 
 ) {}

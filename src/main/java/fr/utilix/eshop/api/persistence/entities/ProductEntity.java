@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,19 +48,21 @@ public class ProductEntity extends BaseEntity{
     private double price;
 
     @Column(name = "stock", nullable = false)
-    private Integer stock;
+    private int stock;
 
     @Column(name = "discount", nullable = false)
     private double discount;
 
+    @Column(name = "rating", nullable = false)
+    private double rating;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_category",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private List<CategoryEntity> categories = new ArrayList<>();
+    @Column(name = "promo_start")
+    private LocalDate promoStart;
 
+    @Column(name = "promo_end")
+    private LocalDate promoEnd;
+
+    @ManyToOne
+    private CategoryEntity categorie;
 
 }

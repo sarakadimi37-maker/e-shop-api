@@ -1,4 +1,14 @@
-INSERT INTO product (name, description, image_url, is_active, price, stock, discount, created_at, updated_at)
+
+
+INSERT INTO `category` (`created_at`, `updated_at`, `label`) VALUES
+('2025-12-22 23:36:52.000000', '2025-12-22 23:36:52.000000', 'gaming'),
+('2025-12-22 23:36:52.000000', '2025-12-22 23:36:52.000000', 'clothing'),
+('2025-12-03 17:46:45.000000', '2025-12-22 23:36:52.000000', 'home'),
+('2025-12-02 17:47:37.000000', '2025-12-03 17:47:37.000000', 'electronics'),
+('2025-12-22 23:36:52.000000', '2025-12-22 23:36:52.000000', 'sports');
+
+
+INSERT INTO product (name, description, image_url, is_active, price, stock, discount, rating, categorie_id, created_at, updated_at)
 VALUES
 (
   'Clavier mécanique',
@@ -8,6 +18,8 @@ VALUES
   79.99,
   12,
   0.0,
+  4.9,
+  4,
   NOW(),
   NOW()
 ),
@@ -19,6 +31,8 @@ VALUES
   59.99,
   25,
   0.0,
+  4.5,
+  1,
   NOW(),
   NOW()
 ),
@@ -30,6 +44,8 @@ VALUES
   99.99,
   8,
   0.0,
+  2.6,
+  5,
   NOW(),
   NOW()
 ),
@@ -41,6 +57,8 @@ VALUES
   199.99,
   5,
   0.0,
+  2.0,
+  4,
   NOW(),
   NOW()
 );

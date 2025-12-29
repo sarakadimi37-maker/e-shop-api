@@ -32,6 +32,15 @@ public class CustomerService {
         return CustomerMapper.toDto(customer);
     }
 
+
+    public CustomerResponseDTO findByUserId(Long userId) {
+        CustomerEntity customer = customerRepository.findByUserId(userId)
+                .orElseThrow(()-> new ResourceNotFoundException(
+                        "Customer avec  l'id " + userId + " n'existe pas."
+                ));
+        return CustomerMapper.toDto(customer);
+    }
+
     public CustomerResponseDTO create(CustomerRequestDTO dto){
         CustomerEntity entity = CustomerMapper.toEntity(dto);
         CustomerEntity saved = customerRepository.save(entity);

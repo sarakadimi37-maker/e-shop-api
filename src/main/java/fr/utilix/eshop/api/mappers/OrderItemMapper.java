@@ -7,14 +7,13 @@ import fr.utilix.eshop.api.persistence.entities.OrderItemEntity;
 
 public class OrderItemMapper {
     public static OrderItemResponseDTO toDto(OrderItemEntity entity) {
-        Integer quantity = null;
-        Double uintPrice = null;
-        ProductResponseDTO product = null;
-        quantity = entity.getQuantity();
-        uintPrice = entity.getUintPrice();
-        product = ProductMapper.toDto( entity.getProduct() );
+        Long orderItemId = entity.getId();
+        Integer quantity = entity.getQuantity();
+        Double uintPrice = entity.getUintPrice();
+        ProductResponseDTO product = ProductMapper.toDto( entity.getProduct() );
 
         return new OrderItemResponseDTO(
+                orderItemId,
                 quantity,
                 uintPrice,
                 product
