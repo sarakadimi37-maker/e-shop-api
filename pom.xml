@@ -194,32 +194,21 @@
         </profile>
         <profile>
             <id>integration-tests</id>
-
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <artifactId>maven-surefire-plugin</artifactId>
                         <version>3.2.5</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-
                         <configuration>
                             <includes>
-                                <include>**/integration/**/*IT.java</include>
+                                <include>**/integration/**/*.java</include>
                             </includes>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>e2e-tests</id>
             <build>
