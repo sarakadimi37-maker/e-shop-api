@@ -58,9 +58,8 @@ public record ProductRequestDTO(
         @Min(value = 0, message = "La remise ne peut pas être inférieur à 0%")
         double discount,
 
-        @Valid
+
         LocalDate promoStart,
-        @Valid
         LocalDate promoEnd
 
 ) {}

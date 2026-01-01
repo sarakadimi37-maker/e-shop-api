@@ -36,7 +36,7 @@ public class UserEntity implements UserDetails {
     /* 🔐 Méthodes UserDetails (utilisées par Spring Security) */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(() -> "ROLE_" + role.name());
+        return Collections.singletonList(() -> role.name());
     }
 
     @Override

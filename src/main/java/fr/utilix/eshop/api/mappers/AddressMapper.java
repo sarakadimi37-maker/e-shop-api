@@ -8,12 +8,14 @@ import fr.utilix.eshop.api.persistence.entities.AddressEntity;
 public class AddressMapper {
 
     public static AddressEntity toEntity(AddressRequestDTO dto) {
+        if(dto == null) {
+            return null;
+        }
         AddressEntity entity = new AddressEntity();
         entity.setCity(dto.city());
         entity.setStreet(dto.street());
         entity.setZipCode(dto.zipCode());
         entity.setCountry(dto.country());
-        entity.setCustomer(CustomerMapper.toEntity(dto.customer()));
         return entity;
     }
 

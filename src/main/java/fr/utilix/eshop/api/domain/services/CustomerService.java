@@ -16,11 +16,12 @@ import java.util.List;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final CustomerMapper customerMapper;
 
     public List<CustomerResponseDTO> findAll(){
         return customerRepository.findAll()
                 .stream()
-                .map(CustomerMapper::toDto)
+                .map(customerMapper::toDto)
                 .toList();
     }
 
@@ -29,7 +30,7 @@ public class CustomerService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Customer avec  l'id " + id + " n'existe pas."
                 ));
-        return CustomerMapper.toDto(customer);
+        return customerMapper.toDto(customer);
     }
 
 
@@ -38,13 +39,13 @@ public class CustomerService {
                 .orElseThrow(()-> new ResourceNotFoundException(
                         "Customer avec  l'id " + userId + " n'existe pas."
                 ));
-        return CustomerMapper.toDto(customer);
+        return customerMapper.toDto(customer);
     }
 
     public CustomerResponseDTO create(CustomerRequestDTO dto){
-        CustomerEntity entity = CustomerMapper.toEntity(dto);
+        CustomerEntity entity = customerMapper.toEntity(dto);
         CustomerEntity saved = customerRepository.save(entity);
-        return CustomerMapper.toDto(saved);
+        return customerMapper.toDto(saved);
     }
 
     public CustomerResponseDTO update(Long id, CustomerRequestDTO dto){
@@ -54,7 +55,7 @@ public class CustomerService {
                 ));
         existing.updateForm(dto);
         CustomerEntity saved = customerRepository.save(existing);
-        return CustomerMapper.toDto(saved);
+        return customerMapper.toDto(saved);
     }
 
     public void delete(Long id){

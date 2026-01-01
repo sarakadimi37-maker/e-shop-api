@@ -82,13 +82,6 @@ public class ProductController {
             return ResponseEntity.ok(response);
     }
 
-    @PostMapping
-    public ResponseEntity<ProductResponseDTO> createProduct(
-            @Valid @RequestBody ProductRequestDTO request
-    ) {
-        ProductResponseDTO response = productService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> updateProduct(

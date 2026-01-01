@@ -52,7 +52,6 @@ public class CustomerEntity extends BaseEntity{
 
 
     public void updateForm(CustomerRequestDTO dto) {
-        // à completer
     }
 }
 

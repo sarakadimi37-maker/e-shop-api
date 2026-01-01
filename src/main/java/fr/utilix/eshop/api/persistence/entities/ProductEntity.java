@@ -23,6 +23,7 @@ import java.util.List;
 @Setter
 public class ProductEntity extends BaseEntity{
 
+
     public void updateFrom(ProductRequestDTO dto){
         this.name = dto.name();
         this.description = dto.description();

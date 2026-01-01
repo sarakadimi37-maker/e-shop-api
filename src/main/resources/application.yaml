@@ -16,8 +16,6 @@ springdoc:
     operationsSorter: method
     displayRequestDuration: true
 
-
-
 spring:
   application:
     name: eshop_api
@@ -46,3 +44,10 @@ spring:
         format_sql: true
   cache:
     type: simple
+
+  profiles:
+    active:
+      - development
+  config:
+    import:
+      - "configtree:./"
