@@ -1,8 +1,30 @@
-logging:
-  level:
-    root: INFO
-    org.springframework.web: WARN
+eshop:
+  jwt:
+    secret: test-secret
+    expiration: 15000000
 
 spring:
+  security:
+    enabled: false
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+
   jpa:
-    show-sql: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+    hibernate:
+      ddl-auto: create-drop
+
+jakarta:
+  persistence:
+    jdbc:
+      url: jdbc:h2:mem:testdb
