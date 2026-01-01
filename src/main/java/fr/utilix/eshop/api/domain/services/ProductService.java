@@ -9,12 +9,17 @@ import fr.utilix.eshop.api.mappers.ProductMapper;
 import fr.utilix.eshop.api.persistence.entities.ProductEntity;
 import fr.utilix.eshop.api.persistence.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Service
 @AllArgsConstructor
 public class ProductService {
@@ -22,14 +27,14 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     // Exemple : Invalide le cache quand on ajoute un produit
-    // Retire ce log une fois que tu as vérifié que ton cache fonctionne,
     @CacheEvict(value = "products", allEntries = true)
     public ProductEntity addProduct(ProductEntity product) {
         return productRepository.save(product);
     }
 
-    @Cacheable("Products")
+
     public List<ProductResponseDTO> findAll(){
+
         return productRepository.findAll()
                 .stream()
                 .map(ProductMapper::toDto)
@@ -80,9 +85,19 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    public List<ProductResponseDTO> getDiscouts(Pageable pageable){
+        return productRepository.findPromotion(pageable).stream().map(ProductMapper::toDto).toList();
+    }
 
     public void deleteAll() {
         // productRepository.deleteAll();
         // Todo les regle metier concernant de suppression d'un produit
+    }
+
+    @Cacheable("Products")
+    public Page<ProductResponseDTO> getAllProducts(Pageable pageable) {
+        return productRepository
+                .findAll(pageable)
+                .map(ProductMapper::toDto);
     }
 }

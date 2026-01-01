@@ -8,7 +8,7 @@ public record RegisterUserRequestDTO(String email, String password) {
     public UserEntity toEntity(){
         UserEntity user = new UserEntity();
         user.setEmail(email);
-        user.setRole(Role.USER);
+        user.setRole(Role.ROLE_USER);
         // on ne set pas le mot de passe dans le Mapper
         return user;
     }

@@ -1,10 +1,10 @@
 package fr.utilix.eshop.api.exposition.controllers;
 
 import fr.utilix.eshop.api.domain.services.ProductService;
+import fr.utilix.eshop.api.exposition.PagenateUtils;
 import fr.utilix.eshop.api.exposition.dtos.request.ProductRequestDTO;
 import fr.utilix.eshop.api.exposition.dtos.response.ProductResponseDTO;
 import fr.utilix.eshop.api.mappers.ProductMapper;
-import fr.utilix.eshop.api.persistence.entities.CategoryEntity;
 import fr.utilix.eshop.api.persistence.entities.ProductEntity;
 import fr.utilix.eshop.api.persistence.repositories.ProductRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +40,6 @@ public class ProductController {
         String sortField = sort[0];
         String sortDirection = sort.length > 1 ? sort[1] : "asc";
 
-        // 👇 On construit un objet "Pageable" avec les RequestParams
         Sort sortDirction = sortDirection.equalsIgnoreCase("desc")
                 ? Sort.by(sortField).descending()
                 : Sort.by(sortField).ascending();
@@ -51,15 +49,10 @@ public class ProductController {
                 sortDirction
         );
 
-        // 👇 On passe cet objet Pageable en argument de findAll
-        Page<ProductEntity> productPage = productRepository.findAll(pageable);
+        Page<ProductResponseDTO> productPage = productService.getAllProducts(pageable);
 
         // 👇 On prépare et renvoie la réponse au client, en incluant les résultats (bien sûr), mais aussi "où en est le client dans sa recherche" : page actuelle, nombre d'élements par page, nombre de pages total.
-        Map<String, Object> response = new HashMap<>();
-        response.put("content", productPage.getContent());
-        response.put("currentPage", productPage.getNumber());
-        response.put("totalItems", productPage.getTotalElements());
-        response.put("totalPages", productPage.getTotalPages());
+        Map<String, Object> response = PagenateUtils.getResponse(productPage);
 
         return ResponseEntity.ok(response);
     }
@@ -72,10 +65,7 @@ public class ProductController {
         // Du code Java qui s'occupe de filtrer une collection selon les critères
         List<ProductEntity> products = productRepository.findAll();
         if(category != null){
-          return  products.stream().filter(product -> {
-                List<CategoryEntity> categories = product.getCategories();
-                return categories.stream().anyMatch(cat -> cat.getLabel().equals(category));
-            }).toList();
+          return  products.stream().filter(product -> product.getCategorie().getLabel().equals(category)).toList();
         }
         return products;
     }
@@ -92,13 +82,6 @@ public class ProductController {
             return ResponseEntity.ok(response);
     }
 
-    @PostMapping
-    public ResponseEntity<ProductResponseDTO> createProduct(
-            @Valid @RequestBody ProductRequestDTO request
-    ) {
-        ProductResponseDTO response = productService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> updateProduct(
@@ -134,6 +117,18 @@ public class ProductController {
         }
 
     }
+
+    @GetMapping("/discount")
+    public ResponseEntity<List<ProductResponseDTO>> getDiscount( @RequestParam(defaultValue = "0") int page,
+                                                                 @RequestParam(defaultValue = "5") int size){
+        Pageable pageable = PageRequest.of(
+                page,
+                size
+        );
+        List<ProductResponseDTO>  products = productService.getDiscouts(pageable);
+        return ResponseEntity.ok(products);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.delete(id);

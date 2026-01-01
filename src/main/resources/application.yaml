@@ -16,8 +16,6 @@ springdoc:
     operationsSorter: method
     displayRequestDuration: true
 
-
-
 spring:
   application:
     name: eshop_api
@@ -35,9 +33,6 @@ spring:
     url: jdbc:mysql://${DB_HOST_DEV}:${DB_PORT_DEV}/${DB_NAME_DEV}?createDatabaseIfNotExist=true
     username: ${DB_USER_DEV}
     password: ${DB_PASSWORD_DEV}
-  sql:
-    init:
-      mode: always
   jpa:
     defer-datasource-initialization: true
     hibernate:
@@ -49,3 +44,10 @@ spring:
         format_sql: true
   cache:
     type: simple
+
+  profiles:
+    active:
+      - development
+  config:
+    import:
+      - "configtree:./"

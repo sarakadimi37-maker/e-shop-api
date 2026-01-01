@@ -11,7 +11,11 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders",
+    indexes = {
+        @Index(name = "idx_orders_status", columnList = "status")
+    }
+)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,7 +27,7 @@ public class OrderEntity extends BaseEntity{
     private OrderStatus status;
 
     // Technique : c’est pourtant Order le propriétaire de la relation, car c’est lui qui a la colonne customer_id dans sa table.
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 

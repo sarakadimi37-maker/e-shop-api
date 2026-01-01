@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/customer")
 @AllArgsConstructor
 public class CustomerController {
 
@@ -24,9 +24,11 @@ public class CustomerController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponseDTO> getById(@PathVariable Long id){
-        CustomerResponseDTO response = customerService.findById(id);
+
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<CustomerResponseDTO> getByUserId(@PathVariable Long userId){
+        CustomerResponseDTO response = customerService.findByUserId(userId);
         return ResponseEntity.ok(response);
     }
 

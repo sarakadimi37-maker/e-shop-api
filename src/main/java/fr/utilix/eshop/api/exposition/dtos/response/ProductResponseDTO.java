@@ -10,8 +10,13 @@ package fr.utilix.eshop.api.exposition.dtos.response;
  * @param description
  * @param imageUrl
  * @param price
- * @param stock
- * @param discount
+ * @param quantity
+ * @param inStock
+ * @param discountPercentage
+ * @param isPromo
+ * @param isNew
+ * @param category
+ * @param rating
  */
 public record ProductResponseDTO(
         Long id,
@@ -19,6 +24,11 @@ public record ProductResponseDTO(
         String description,
         String imageUrl,
         double price,
-        int stock,
-        double discount
+        int quantity,
+        boolean inStock,
+        double discountPercentage,
+        boolean isPromo,
+        boolean isNew,
+        String category,
+        double rating
 ) {}

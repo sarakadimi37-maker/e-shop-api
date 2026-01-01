@@ -7,6 +7,8 @@ import fr.utilix.eshop.api.persistence.entities.UserEntity;
 import fr.utilix.eshop.api.persistence.repositories.UserRepository;
 import fr.utilix.eshop.api.security.JwtUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +44,7 @@ public class AuthController {
         userRepository.save(user);
 
         String response = "Utilisateur inscrit avec succès !";
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 

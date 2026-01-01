@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 public record FavoriteRequestDTO(
 
         @Valid
-        @NotBlank(message = "Le produit ne peut pas être vide")
-        ProductEntity product
+        Long productId,
+        Long customerId
 ) {
 
 
