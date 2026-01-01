@@ -1,18 +1,21 @@
 eshop:
   jwt:
-    secret: 2c2b1517f08fbbb09c6ace2fd8b94de0f69dfa3eghfthg545
+    secret: test-secret
     expiration: 15000000
 
 spring:
   security:
     enabled: false
+
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
     driver-class-name: org.h2.Driver
     username: sa
     password: password
+
   jpa:
     show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
 

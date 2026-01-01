@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ActiveProfiles("integration")
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class AuthIntegrationTest {
 
     @Autowired
