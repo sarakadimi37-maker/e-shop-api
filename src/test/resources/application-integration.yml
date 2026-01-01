@@ -1,8 +1,11 @@
 eshop:
   jwt:
-    secret: ${JWT_SECRET}
+    secret: 2c2b1517f08fbbb09c6ace2fd8b94de0f69dfa3eghfthg545
+    expiration: 15000000
 
 spring:
+  security:
+    enabled: false
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
