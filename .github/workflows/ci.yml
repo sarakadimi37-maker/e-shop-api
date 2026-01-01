@@ -46,7 +46,7 @@ jobs:
           cache: 'maven'
 
       - name: Run integration tests
-        run: mvn test -Pintegration-tests
+        run: mvn verify -Pintegration-tests
         env:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
@@ -66,4 +66,4 @@ jobs:
           cache: 'maven'
 
       - name: Run e2e tests
-        run: mvn test -Pe2e-tests
+        run: mvn verify -Pe2e-tests
