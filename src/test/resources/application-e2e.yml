@@ -1,3 +1,8 @@
+eshop:
+  jwt:
+    secret: 4f1b5272c2b1517f08fbbb09c6ace2fd8b94de0f69dfa3ecb6a445072e0a8866
+    expiration: 15000000
+
 logging:
   level:
     root: INFO
