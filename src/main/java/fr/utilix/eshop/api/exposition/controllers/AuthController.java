@@ -1,23 +1,23 @@
 package fr.utilix.eshop.api.exposition.controllers;
 
+import fr.utilix.eshop.api.domain.services.RegisterService;
 import fr.utilix.eshop.api.exposition.dtos.request.LoginUserRequestDTO;
-import fr.utilix.eshop.api.exposition.dtos.request.RegisterUserRequestDTO;
+import fr.utilix.eshop.api.exposition.dtos.request.RegisterRequestDTO;
 import fr.utilix.eshop.api.exposition.dtos.response.LoginUserResponseDTO;
 import fr.utilix.eshop.api.persistence.entities.UserEntity;
-import fr.utilix.eshop.api.persistence.repositories.UserRepository;
 import fr.utilix.eshop.api.security.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,27 +25,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+
     private final JwtUtil jwtUtil;
+    private final RegisterService registerService;
 
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterUserRequestDTO request) {
-        boolean alreadyExists = userRepository.existsByEmail(request.email());
-        if (alreadyExists) {
-            String response = "Cet email est déjà utilisé !";
-            return ResponseEntity.badRequest().body(response);
-        }
+    public ResponseEntity<Map<String, String>> registerUser(
+            @RequestBody RegisterRequestDTO request) {
 
-        UserEntity user = request.toEntity();
-        // 👇 On SET le mot de passe depuis le Controller, pas depuis le Mapper
-        user.setPassword(passwordEncoder.encode(request.password()));
-        userRepository.save(user);
+        registerService.create(request);
 
-        String response = "Utilisateur inscrit avec succès !";
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(Map.of("message", "Utilisateur inscrit avec succès !"));
     }
+
 
 
     @PostMapping("/login")

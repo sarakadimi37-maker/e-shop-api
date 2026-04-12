@@ -1,15 +1,15 @@
 package fr.utilix.eshop.api.security;
 
-import fr.utilix.eshop.api.domain.services.CustomUserDetailsService;
+import fr.utilix.eshop.api.persistence.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.lang.NonNullApi;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,7 +22,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
-    private final CustomUserDetailsService userDetailsService;
+    private final UserRepository userRepository;
 
     /**
      * @param request
@@ -51,7 +51,10 @@ public class JwtFilter extends OncePerRequestFilter {
         String email = jwtUtil.getEmailFromToken(jwt);
 
         // On charge l’utilisateur depuis la base
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        UserDetails userDetails = userRepository.findByEmail(email).orElseThrow(() ->
+                new UsernameNotFoundException(
+                        "Utilisateur avec l’email " + email + " non trouvé."
+                ));
 
         // On crée un objet d’authentification Spring Security
         UsernamePasswordAuthenticationToken authentication =

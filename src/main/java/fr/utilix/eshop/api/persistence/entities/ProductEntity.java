@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProductEntity extends BaseEntity{
+public class  ProductEntity extends BaseEntity{
 
 
     public void updateFrom(ProductRequestDTO dto){

@@ -1,10 +1,16 @@
 package fr.utilix.eshop.api.domain.services;
 
 import fr.utilix.eshop.api.exception.ResourceNotFoundException;
+import fr.utilix.eshop.api.exposition.dtos.request.AddressRequestDTO;
 import fr.utilix.eshop.api.exposition.dtos.request.CustomerRequestDTO;
+import fr.utilix.eshop.api.exposition.dtos.request.RegisterRequestDTO;
+import fr.utilix.eshop.api.exposition.dtos.request.UserRequestDTO;
 import fr.utilix.eshop.api.exposition.dtos.response.CustomerResponseDTO;
+import fr.utilix.eshop.api.mappers.AddressMapper;
 import fr.utilix.eshop.api.mappers.CustomerMapper;
+import fr.utilix.eshop.api.persistence.entities.AddressEntity;
 import fr.utilix.eshop.api.persistence.entities.CustomerEntity;
+import fr.utilix.eshop.api.persistence.entities.UserEntity;
 import fr.utilix.eshop.api.persistence.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +22,11 @@ import java.util.List;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final CustomerMapper customerMapper;
 
     public List<CustomerResponseDTO> findAll(){
         return customerRepository.findAll()
                 .stream()
-                .map(customerMapper::toDto)
+                .map(CustomerMapper::toDto)
                 .toList();
     }
 
@@ -30,7 +35,7 @@ public class CustomerService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Customer avec  l'id " + id + " n'existe pas."
                 ));
-        return customerMapper.toDto(customer);
+        return CustomerMapper.toDto(customer);
     }
 
 
@@ -39,14 +44,9 @@ public class CustomerService {
                 .orElseThrow(()-> new ResourceNotFoundException(
                         "Customer avec  l'id " + userId + " n'existe pas."
                 ));
-        return customerMapper.toDto(customer);
+        return CustomerMapper.toDto(customer);
     }
 
-    public CustomerResponseDTO create(CustomerRequestDTO dto){
-        CustomerEntity entity = customerMapper.toEntity(dto);
-        CustomerEntity saved = customerRepository.save(entity);
-        return customerMapper.toDto(saved);
-    }
 
     public CustomerResponseDTO update(Long id, CustomerRequestDTO dto){
         CustomerEntity existing = customerRepository.findById(id)
@@ -55,7 +55,7 @@ public class CustomerService {
                 ));
         existing.updateForm(dto);
         CustomerEntity saved = customerRepository.save(existing);
-        return customerMapper.toDto(saved);
+        return CustomerMapper.toDto(saved);
     }
 
     public void delete(Long id){

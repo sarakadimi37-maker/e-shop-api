@@ -39,8 +39,8 @@ public class GlobalExceptionHandler {
                 .body("Erreur 404 : Le chemin que vous avez demandé n'existe pas.");
     }
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<String> handleValidationError(ValidationException ex){
+    @ExceptionHandler({ValidationException.class, UtilixException.class})
+    public ResponseEntity<String> handleValidationError(RuntimeException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
     }
