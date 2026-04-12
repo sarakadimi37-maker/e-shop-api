@@ -23,7 +23,7 @@ public class CustomerEntity extends BaseEntity{
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
-    @Column(name = "phone", nullable = false, length = 50)
+    @Column(name = "phone", length = 50)
     private String phone;
 
     // Métier : le Customer est parent de Order (il possède plusieurs commandes). => list
