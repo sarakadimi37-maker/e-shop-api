@@ -6,9 +6,9 @@ import fr.utilix.eshop.api.exposition.dtos.response.FavoriteResponseDTO;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +20,7 @@ public class FavoriteController {
 
     private final FavoriteService favoriteService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{customerId}")
     public ResponseEntity<List<FavoriteResponseDTO>>  getFavorites(@PathVariable("customerId") Long customerId){
         List<FavoriteResponseDTO> favorites = favoriteService.findAllFavorite(customerId);

@@ -29,11 +29,9 @@ public record AddressRequestDTO(
         @NotBlank(message = "Le pays est obligatoire.")
         @NotNull(message = "Le pays ne peut pas être null.")
         @Size(max = 80)
-        String country,
+        String country
 
-        @Valid
-        @NotBlank(message = "L'address est obligatoire.")
-        CustomerRequestDTO customer
+
 ) {
 
 }
