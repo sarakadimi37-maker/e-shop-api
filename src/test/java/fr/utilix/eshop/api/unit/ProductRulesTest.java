@@ -19,7 +19,6 @@ public class ProductRulesTest {
     void setup() {
         // intialiser pour l'enseble des tests
 
-
         LocalDate startDate = LocalDate.parse("2025-05-12");
         LocalDate endDate = LocalDate.parse("2025-01-12");
         product = new ProductRequestDTO(
